@@ -4,12 +4,10 @@ project(gtpc-datagen)
 # Don't try to contact github everytime.
 set (FETCHCONTENT_FULLY_DISCONNECTED "OFF")
 
-# Set the searching location for cmake 'include' locations
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
 # Require C++20
-include(c++-standards)
-cxx_20()
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 #---------------------------------------------------------------------------
 
