@@ -379,7 +379,8 @@ void GtpcGenerator::generateOrdersAndOrderLines() {
    for (o_w_id = 1L; o_w_id<=warehouse_count; o_w_id++) {
       for (o_d_id = 1L; o_d_id<=kDistrictsPerWarehouse; o_d_id++) {
 
-        //  for (o_id = 1; o_id<=OrdersPerDistrict; o_id++) {
+         int64_t id4 = 0;
+         //  for (o_id = 1; o_id<=OrdersPerDistrict; o_id++) {
          for (o_c_id = 1; o_c_id<=kCustomerPerDistrict; o_c_id++) {
             id1++;
             id2 = customer_id_permutation[id1 - 1];
@@ -389,12 +390,13 @@ void GtpcGenerator::generateOrdersAndOrderLines() {
             // makeNow(o_entry_d.data());
             makeDate(2010, 2012, o_entry_d.data());
 
+            id4++;
             // @formatter:off
- 	    o_csv << id2 /*<< o_d_id << o_w_id << o_c_id*/ << o_entry_d << (id2>2100 ? kNull : std::to_string(o_carrier_id))
-                  << o_ol_cnt << o_all_local << (id2>2100 ? (int64_t)1 : (int64_t)0) << csv::endl;
+             o_csv << id1 /*<< o_d_id << o_w_id << o_c_id*/ << o_entry_d << (id4>2100 ? kNull : std::to_string(o_carrier_id))
+                        << o_ol_cnt << o_all_local << (id4>2100 ? (int64_t)1 : (int64_t)0) << csv::endl;
             // @formatter:on
 
-            hasPlaced_csv << id1 << id2 << csv::endl;
+            hasPlaced_csv << id2 << id1 << csv::endl;
 
             // Order line items
             for (ol_number = 1; ol_number<=o_ol_cnt; ol_number++) {
@@ -405,7 +407,7 @@ void GtpcGenerator::generateOrdersAndOrderLines() {
                makeAlphaString(24, 24, ol_dist_info.data());
                makeDate(2011, 2012, ol_del_d.data());
 
-               if (id2>2100) {
+               if (id4>2100) {
                   ol_amount = (float) (makeNumber(10L, 10000L)) / 100.0f;
                   // @formatter:off
                   ol_csv << id3 /*<< o_id << o_d_id << o_w_id*/ << ol_number /*<< ol_i_id << o_w_id*/ << kNullDate
@@ -418,7 +420,7 @@ void GtpcGenerator::generateOrdersAndOrderLines() {
                          << ol_del_d << ol_quantity << csv::Precision(2) << ol_amount << ol_dist_info << csv::endl;
                   // @formatter:on
                }
-               contains_csv << id2 << id3 << csv::endl;
+               contains_csv << id1 << id3 << csv::endl;
                olHasStock_csv << id3 << ol_s_id <<  csv::endl;
             }
 
